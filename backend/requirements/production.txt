@@ -1,0 +1,4 @@
+-r base.txt
+gunicorn==23.0.0
+django-sendgrid-v5==1.2.3
+sentry-sdk[django]==2.25.1
