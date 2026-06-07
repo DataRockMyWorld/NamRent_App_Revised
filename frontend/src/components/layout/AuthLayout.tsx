@@ -1,94 +1,93 @@
 import { Outlet } from "react-router-dom";
-import { Car, FileText, Wrench, ShieldCheck } from "lucide-react";
-import namrentLogo from "@/assets/namrent-logo.jpg";
+import { motion } from "motion/react";
 
-const FEATURES = [
-  { icon: Car, text: "Real-time fleet visibility across your entire operation" },
-  { icon: Wrench, text: "Automated maintenance tracking and scheduling" },
-  { icon: FileText, text: "Contract and invoice management in one place" },
-  { icon: ShieldCheck, text: "Role-based access for admin, ops, and clients" },
-];
-
+// ─── Layout ───────────────────────────────────────────────────────────────────
 export function AuthLayout() {
   return (
-    <div className="flex min-h-screen bg-[var(--color-bg-app)]">
+    <div className="auth-page-bg relative min-h-screen flex flex-col">
 
-      {/* ── Left brand panel ── */}
-      <div
-        className="hidden lg:flex lg:w-[52%] xl:w-[56%] flex-col justify-between p-12 relative overflow-hidden"
-        style={{ background: "linear-gradient(145deg, #0D1926 0%, #1A3A5C 60%, #1e5799 100%)" }}
-      >
-        {/* Subtle grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
+      {/* ── Brand — top left, like Stripe's wordmark ─────────────────────────── */}
+      <header className="relative z-10 px-8 sm:px-10 pt-7 pb-0">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35 }}
+          className="flex items-center gap-2"
+        >
+          {/* Small N mark */}
+          <div
+            style={{
+              width: "22px",
+              height: "22px",
+              borderRadius: "5px",
+              background: "#3B96E8",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path
+                d="M2.5 9.5V2.5l4 5V2.5"
+                stroke="white"
+                strokeWidth="1.7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <span
+            style={{
+              fontSize: "15px",
+              fontWeight: 600,
+              color: "#0D1926",
+              letterSpacing: "-0.012em",
+              fontFamily: "var(--font-heading)",
+            }}
+          >
+            NamRent
+          </span>
+        </motion.div>
+      </header>
+
+      {/* ── Main — login card centered ───────────────────────────────────────── */}
+      <main className="relative z-10 flex-1 flex items-center justify-center px-5 py-8 sm:py-10">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.42, delay: 0.06, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full"
           style={{
-            backgroundImage:
-              "repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,1) 39px, rgba(255,255,255,1) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,1) 39px, rgba(255,255,255,1) 40px)",
+            maxWidth: "460px",
+            background: "#FFFFFF",
+            borderRadius: "10px",
+            border: "1px solid rgba(48,49,61,0.08)",
+            boxShadow:
+              "0 1px 1px rgba(48,49,61,0.03), 0 4px 12px rgba(48,49,61,0.04), 0 18px 48px rgba(48,49,61,0.05)",
+            paddingBlock: "clamp(28px, 4vw, 48px)",
+            paddingInline: "clamp(24px, 5.5vw, 56px)",
           }}
-        />
-
-        {/* Glowing accent orb */}
-        <div
-          className="absolute top-[-120px] right-[-80px] w-[480px] h-[480px] rounded-full opacity-20 pointer-events-none"
-          style={{ background: "radial-gradient(circle, #3B96E8 0%, transparent 70%)" }}
-        />
-
-        {/* Content */}
-        <div className="relative z-10">
-          <div className="flex items-center gap-3">
-            <img src={namrentLogo} alt="NamRent" className="h-9 w-auto rounded-md" />
-            <span className="text-lg font-bold text-white tracking-tight">NamRent Fleet</span>
-          </div>
-        </div>
-
-        <div className="relative z-10 space-y-8">
-          <div>
-            <h1 className="text-4xl font-bold text-white leading-tight tracking-tight">
-              Fleet management<br />built for Namibia.
-            </h1>
-            <p className="mt-4 text-base text-white/60 leading-relaxed max-w-sm">
-              A complete platform to manage vehicles, contracts, maintenance, and clients — all in one place.
-            </p>
-          </div>
-
-          <ul className="space-y-4">
-            {FEATURES.map(({ icon: Icon, text }) => (
-              <li key={text} className="flex items-start gap-3">
-                <div
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg mt-0.5"
-                  style={{ background: "rgba(59,150,232,0.2)", color: "#7EC8F8" }}
-                >
-                  <Icon size={14} />
-                </div>
-                <span className="text-sm text-white/70 leading-relaxed">{text}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="relative z-10">
-          <p className="text-xs text-white/30">
-            &copy; {new Date().getFullYear()} NamRent Fleet Management. All rights reserved.
-          </p>
-        </div>
-      </div>
-
-      {/* ── Right form panel ── */}
-      <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 bg-[var(--color-bg-surface)]">
-        {/* Mobile logo */}
-        <div className="lg:hidden mb-8 flex items-center gap-3">
-          <img src={namrentLogo} alt="NamRent" className="h-9 w-auto rounded-md" />
-          <span className="text-base font-bold text-[var(--color-text-heading)]">NamRent Fleet</span>
-        </div>
-
-        <div className="w-full max-w-sm">
+        >
           <Outlet />
-        </div>
+        </motion.div>
+      </main>
 
-        <p className="lg:hidden mt-8 text-xs text-[var(--color-text-muted)] text-center">
-          &copy; {new Date().getFullYear()} NamRent Fleet Management
-        </p>
-      </div>
+      {/* ── Footer ───────────────────────────────────────────────────────────── */}
+      <footer className="relative z-10 text-center px-5 pb-7">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35, delay: 0.22 }}
+        >
+          <p style={{ fontSize: "12px", color: "rgba(48,49,61,0.4)", lineHeight: 1.6 }}>
+            Protected portal for NamRent staff, clients, and dealers.
+          </p>
+          <p style={{ fontSize: "12px", color: "rgba(48,49,61,0.3)", marginTop: "2px" }}>
+            &copy; {new Date().getFullYear()} NamRent Fleet Management.
+          </p>
+        </motion.div>
+      </footer>
     </div>
   );
 }
